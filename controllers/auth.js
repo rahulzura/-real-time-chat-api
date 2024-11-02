@@ -7,7 +7,8 @@ export const signUpController = async (req, res) => {
     const { id, token } = await signUp({ username, password });
     res.send({ id, token });
   } catch (err) {
-    res.send({ err });
+    console.error(err);
+    res.status(500).send({ err });
   }
 };
 
@@ -20,6 +21,6 @@ export const signInController = async (req, res) => {
     res.send({ id, token });
   } catch (err) {
     console.error(err);
-    res.send({ err });
+    res.status(500).send({ err });
   }
 };

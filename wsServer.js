@@ -4,7 +4,7 @@ import { onConnection } from './handlers/index.js';
 export const createWsServer = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: 'http://localhost:8000',
+      origin: process.env.WS_ALLOWED_ORIGIN,
       methods: ['GET'],
     }
   });
