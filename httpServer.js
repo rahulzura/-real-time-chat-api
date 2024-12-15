@@ -19,11 +19,13 @@ export const io = new Server(server, {
   }
 });
 
+let refId;
 import { verifyToken } from './utils/token.js';
 const onConnection = async (socket) => {
   try {
     const { token } = socket.handshake.auth;
     const { id } = await verifyToken(token);
+    refId = id;
     await socket.join(id);
   } catch (err) {
     console.error('something went wrong while connecting to ws server', err);
@@ -37,7 +39,7 @@ const onConnection = async (socket) => {
     // } else {
     //   console.log('invalid message received:', msg);
     // }
-    io.to('6728aefbd33ef2554e8f947e').except(socket.id).emit('message', msg);
+    io.to(refId).except(socket.id).emit('message', msg);
   });
 };
 
